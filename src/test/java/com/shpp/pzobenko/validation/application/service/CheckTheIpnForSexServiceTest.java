@@ -9,14 +9,14 @@ class CheckTheIpnForSexServiceTest {
 
     @Test
     void testAreIPNValidBySexMethodOnCorrectValues() {
-        Long someIpn = 1111111198L;
+        Long someIpn = 1000000089L;
         Genders someGender = Genders.FEMALE;
         assertTrue(CheckTheIpnForSexService.areIPNValidBySex(someIpn,someGender));
     }
 
     @Test
     void testAreIPNValidBySexMethodOnWrongValues() {
-        Long someIpn = 1000000011L;
+        Long someIpn = 1000000021L;
         Genders someGender = Genders.MALE;
         assertFalse(CheckTheIpnForSexService.areIPNValidBySex(someIpn,someGender));
     }

@@ -23,10 +23,10 @@ class CitizenOfUkraineRepoTest {
 
     @Test
     void testExistMethodByIpnOnExist() {
-        Long someIpn = 1111111198L;
+        Long someIpn = 1000000089L;
 
         CitizenOfUkraine citizenToTestInDB = CitizenOfUkraine.builder()
-                .ipn(1111111198L)
+                .ipn(someIpn)
                 .firstName("SomeFirstName")
                 .lastName("SomeLastName")
                 .dateOfBirthday(LocalDateTime.now().minusYears(15))

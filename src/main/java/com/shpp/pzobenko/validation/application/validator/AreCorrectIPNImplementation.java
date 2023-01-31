@@ -18,7 +18,7 @@ public class AreCorrectIPNImplementation implements ConstraintValidator<AreCorre
 
     @Override
     public boolean isValid(Long ipn, ConstraintValidatorContext constraintValidatorContext) {
-        long[] ipnOnArray = makeFromLongIPNTheArrayOfLong(ipn);
+        double[] ipnOnArray = makeFromLongIPNTheArrayOfDouble(ipn);
         if(ipnOnArray.length != IPN_LENGTH) {
             return false;
         }
@@ -36,22 +36,23 @@ public class AreCorrectIPNImplementation implements ConstraintValidator<AreCorre
      * @param ipnOnArray ipn for validation in array variant.
      * @return the last digit from ipn which was calculated by formula.
      */
-    private long calculateLastNumberInIpn(long[] ipnOnArray) {
-        long ipnLastNumberByFormula = (ipnOnArray[0] * (-1)) + (ipnOnArray[1] * 5) +
+    private long calculateLastNumberInIpn(double[] ipnOnArray) {
+        double ipnLastNumberByFormula = (ipnOnArray[0] * (-1)) + (ipnOnArray[1] * 5) +
                 (ipnOnArray[2] * 7) + (ipnOnArray[3] * 9) + (ipnOnArray[4] * 4) + (ipnOnArray[5] * 6) +
                 (ipnOnArray[6] * 10) + (ipnOnArray[7] * 5) + (ipnOnArray[8] * 7);
-        ipnLastNumberByFormula = ipnLastNumberByFormula % 11;
-        return Long.parseLong(Long.toString(ipnLastNumberByFormula).split("")
-                [Long.toString(ipnLastNumberByFormula).split("").length -1]);
+        ipnLastNumberByFormula = ipnLastNumberByFormula / 11;
+        log.info("ipn last number after calculation {}", ipnLastNumberByFormula);
+        return Long.parseLong(Double.toString(ipnLastNumberByFormula).split("")
+                [Double.toString(ipnLastNumberByFormula).split("").length-1]);
     }
 
-    private long[] makeFromLongIPNTheArrayOfLong(Long ipn) {
+    private double[] makeFromLongIPNTheArrayOfDouble(Long ipn) {
         String[] ipnOnString = ipn.toString().split("");
 
-        long[] ipnOnArray = new long[ipnOnString.length];
+        double[] ipnOnArray = new double[ipnOnString.length];
 
         for (int i = 0; i < ipnOnString.length; i++) {
-            ipnOnArray[i] = Long.parseLong(ipnOnString[i]);
+            ipnOnArray[i] = Double.parseDouble(ipnOnString[i]);
         }
         return ipnOnArray;
     }

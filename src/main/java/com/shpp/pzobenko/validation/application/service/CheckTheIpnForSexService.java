@@ -12,9 +12,9 @@ public class CheckTheIpnForSexService {
 
     public static boolean areIPNValidBySex(Long ipn, Genders genders) {
         int sexValueFromIPN = getTheNumberWithSexValue(ipn);
-        if(sexValueFromIPN % 2 == 0 && genders.equals(Genders.MALE)) {
+        if(sexValueFromIPN % 2 != 0 && genders.equals(Genders.MALE)) {
             return true;
-        } else return sexValueFromIPN % 2 != 0 && genders.equals(Genders.FEMALE);
+        } else return sexValueFromIPN % 2 == 0 && genders.equals(Genders.FEMALE);
     }
 
     private static int getTheNumberWithSexValue(Long ipn) {

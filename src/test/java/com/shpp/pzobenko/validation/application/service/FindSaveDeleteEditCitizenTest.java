@@ -36,7 +36,7 @@ class FindSaveDeleteEditCitizenTest {
 
     @Test
     void getCitizenOfUkraineFromDBByIpn() {
-        Long ipnForNewCitizen = 1111111181L;
+        Long ipnForNewCitizen = 1000000089L;
 
         CitizenOfUkraine expected = CitizenOfUkraine.builder()
                 .ipn(ipnForNewCitizen)
@@ -56,7 +56,7 @@ class FindSaveDeleteEditCitizenTest {
 
     @Test
     void getCitizenOfUkraineFromDBButThrowException() {
-        Long ipnForCitizenWhichNotExist = 1111111181L;
+        Long ipnForCitizenWhichNotExist = 1000000089L;
 
         assertThatThrownBy(() -> serviceToTest.getCitizenOfUkraineFromDB(ipnForCitizenWhichNotExist))
                 .isInstanceOf(TheCitizenOfUkraineNotFoundException.class)
@@ -67,7 +67,7 @@ class FindSaveDeleteEditCitizenTest {
 
     @Test
     void changeLastName() {
-        Long ipnForNewCitizen = 1111111181L;
+        Long ipnForNewCitizen = 1000000089L;
         String newLastName = "SomeLastName1";
 
         CitizenOfUkraine citizenToTestChangeLastName = CitizenOfUkraine.builder()
@@ -102,7 +102,7 @@ class FindSaveDeleteEditCitizenTest {
 
     @Test
     void changeFirstName() {
-        Long ipnForNewCitizen = 1111111181L;
+        Long ipnForNewCitizen = 1000000089L;
         String newFirstName = "SomeFirstName1";
 
         CitizenOfUkraine citizenToTestChangeFirstName = CitizenOfUkraine.builder()
@@ -145,7 +145,7 @@ class FindSaveDeleteEditCitizenTest {
     @Test
     void canSaveCitizenToDBTest() {
         CitizenOfUkraine citizenToTestSaveInDB = CitizenOfUkraine.builder()
-                .ipn(1111111197L)
+                .ipn(1000000075L)
                 .firstName("SomeFirstName")
                 .lastName("SomeLastName")
                 .dateOfBirthday(LocalDateTime.now().minusYears(5))
@@ -167,7 +167,7 @@ class FindSaveDeleteEditCitizenTest {
     @Test
     void willThrowBecauseAlreadyExist() {
         CitizenOfUkraine citizenToTestSaveInDB = CitizenOfUkraine.builder()
-                .ipn(1111111197L)
+                .ipn(1000000075L)
                 .firstName("SomeFirstName")
                 .lastName("SomeLastName")
                 .dateOfBirthday(LocalDateTime.now().minusYears(5))
@@ -188,7 +188,7 @@ class FindSaveDeleteEditCitizenTest {
 
     @Test
     void deleteCitizenFromDB() {
-        Long ipnForCitizen = 1111111197L;
+        Long ipnForCitizen = 1000000075L;
         CitizenOfUkraine citizenToTestDeleteFromDB = CitizenOfUkraine.builder()
                 .ipn(ipnForCitizen)
                 .firstName("SomeFirstName")

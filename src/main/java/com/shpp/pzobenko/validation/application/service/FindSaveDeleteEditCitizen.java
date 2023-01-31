@@ -1,6 +1,5 @@
 package com.shpp.pzobenko.validation.application.service;
 
-import com.shpp.pzobenko.validation.application.dto.CitizenOfUkraineDTO;
 import com.shpp.pzobenko.validation.application.exception.TheCitizenAlreadyExistException;
 import com.shpp.pzobenko.validation.application.exception.TheCitizenOfUkraineNotFoundException;
 import com.shpp.pzobenko.validation.application.exception.TheIPNHaveWrongValues;
@@ -11,8 +10,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static com.shpp.pzobenko.validation.application.service.DtoEntityMapping.dtoToEntity;
 
 
 @Service
@@ -73,7 +70,7 @@ public class FindSaveDeleteEditCitizen {
     public CitizenOfUkraine saveCitizenToDB(CitizenOfUkraine newCitizen) {
         Long ipnFromNewCitizen = newCitizen.getIpn();
 
-        if (CheckTheIpnForSexService.areIPNValidBySex(ipnFromNewCitizen, newCitizen.getGenders()))
+        if (!CheckTheIpnForSexService.areIPNValidBySex(ipnFromNewCitizen, newCitizen.getGenders()))
             throw new TheIPNHaveWrongValues(newCitizen.getIpn());
 
         log.info("The citizen with IPN {} and sex {} have correct values.", ipnFromNewCitizen,

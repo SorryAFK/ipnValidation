@@ -14,7 +14,7 @@ class DtoEntityMappingTest {
     @Test
     void dtoToEntity() {
         CitizenOfUkraineDTO dtoToTest = CitizenOfUkraineDTO.builder()
-                .ipn(1111111188L)
+                .ipn(1000000089L)
                 .firstName("SomeFirstName")
                 .lastName("SomeLastName")
                 .dateOfBirthday(LocalDateTime.now().minusYears(5))
