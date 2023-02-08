@@ -13,16 +13,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "the_to_do")
 public class TheAim implements Serializable {
     private static final long serialVersionUID = 2405172041950251807L;
     @Id
+    @Column(name = "name_of_aim")
     private String nameOfAim;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonBackReference
     private UserOfToDo userOfToDo;
+    @Column(name = "description")
     private String description;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private StatusOfAim status;
+    @Column(name = "time_of_the_end_of_the_aim")
     private LocalDateTime timeOfTheEndOfAim;
 
     @Override
