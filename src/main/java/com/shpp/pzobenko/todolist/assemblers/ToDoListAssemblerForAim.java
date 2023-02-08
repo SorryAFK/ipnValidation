@@ -18,7 +18,7 @@ public class ToDoListAssemblerForAim implements RepresentationModelAssembler<The
                 linkTo(methodOn(ToDoListController.class).one(theAim.getNameOfAim())).withSelfRel());
         linkTo(methodOn(ToDoListController.class).all()).withRel("To Do's");
 
-        if (theAim.getStatus() == StatusOfAim.PLANED) {
+        if (theAim.getStatus() == StatusOfAim.PLANNED) {
 
             orderModel.add(linkTo(methodOn(ToDoListController.class)
                     .statusToInProgress(theAim.getNameOfAim())).withRel("cancel"));

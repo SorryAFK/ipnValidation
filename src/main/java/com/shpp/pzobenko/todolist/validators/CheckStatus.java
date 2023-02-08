@@ -13,6 +13,6 @@ public class CheckStatus implements ConstraintValidator<IsNewAimStatusArePlaned,
 
     @Override
     public boolean isValid(StatusOfAim statusOfAim, ConstraintValidatorContext constraintValidatorContext) {
-        return statusOfAim == StatusOfAim.PLANED;
+        return statusOfAim == StatusOfAim.PLANNED;
     }
 }
