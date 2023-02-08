@@ -1,7 +1,7 @@
 package com.shpp.pzobenko.todolist.usersinformation;
 
 public enum StatusOfAim {
-    PLANED,
+    PLANNED,
     IN_PROCESS,
     DONE,
     CANCELED

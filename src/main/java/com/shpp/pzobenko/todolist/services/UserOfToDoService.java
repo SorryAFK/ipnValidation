@@ -54,7 +54,7 @@ public class UserOfToDoService {
 
         StatusOfAim statusWhichWasBefore = aim.getStatus();
         log.info("find ok {}", aim.getNameOfAim());
-        if (statusWhichWasBefore == StatusOfAim.PLANED &&
+        if (statusWhichWasBefore == StatusOfAim.PLANNED &&
                 (newStatus == StatusOfAim.IN_PROCESS || newStatus == StatusOfAim.CANCELED)) {
             log.info("Status successfully switched from {} to {}", statusWhichWasBefore, newStatus);
             aim.setStatus(newStatus);

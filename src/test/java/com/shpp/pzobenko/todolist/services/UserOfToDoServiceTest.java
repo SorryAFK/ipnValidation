@@ -49,7 +49,7 @@ class UserOfToDoServiceTest {
         TheAim aimToAdd = TheAim.builder()
                 .nameOfAim("MyAimForTest")
                 .description("JustForTest")
-                .status(StatusOfAim.PLANED)
+                .status(StatusOfAim.PLANNED)
                 .timeOfTheEndOfAim(LocalDateTime.now().plusDays(69))
                 .build();
 
@@ -81,7 +81,7 @@ class UserOfToDoServiceTest {
         TheAim aimToChangeStatus = TheAim.builder()
                 .nameOfAim(aimName)
                 .description("JustForTest")
-                .status(StatusOfAim.PLANED)
+                .status(StatusOfAim.PLANNED)
                 .userOfToDo(userForTest)
                 .timeOfTheEndOfAim(LocalDateTime.now().plusDays(69))
                 .build();
@@ -113,7 +113,7 @@ class UserOfToDoServiceTest {
                 .build();
 
         String aimName = "MyAimForTest";
-        StatusOfAim status = StatusOfAim.PLANED;
+        StatusOfAim status = StatusOfAim.PLANNED;
 
         TheAim aimToChangeStatus = TheAim.builder()
                 .nameOfAim(aimName)
