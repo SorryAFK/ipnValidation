@@ -131,7 +131,7 @@ class UserOfToDoServiceTest {
 
         assertThatThrownBy(() -> serviceToTest.changeStatusOfAim(aimName, newStatus, username))
                 .isInstanceOf(NewStatusHaveWrongValuesException.class)
-                .hasMessageContaining("StatusCannotApply");
+                .hasMessageContaining("StatusCannotBeApplied");
     }
 
     @Test
