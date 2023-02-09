@@ -20,6 +20,9 @@ import java.util.List;
 public class UserOfToDo implements UserDetails, Serializable {
     private static final long serialVersionUID = 1905122041950251207L;
     @Id
+    @GeneratedValue
+    private Long id;
+    @Column(unique = true)
     private String username;
 
     private String password;

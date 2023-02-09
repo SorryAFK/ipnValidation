@@ -18,13 +18,11 @@ public class ToDoListAssemblerForAim implements RepresentationModelAssembler<The
                 linkTo(methodOn(ToDoListController.class).one(theAim.getNameOfAim())).withSelfRel());
         linkTo(methodOn(ToDoListController.class).all()).withRel("To Do's");
 
-//
-//
-//            orderModel.add(linkTo(methodOn(ToDoListController.class)
-//                    .changeStatus(theAim.getNameOfAim(), theAim.getStatus()).withRel("cancel"));
-
-
-
+        StatusOfAim theAimStatus = theAim.getStatus();
+        if (theAimStatus.canChangeOnNextStatus()) {
+            orderModel.add(linkTo(methodOn(ToDoListController.class)
+                    .changeStatus(theAim.getNameOfAim(),theAimStatus.getNextStatus())).withSelfRel());
+        }
         return orderModel;
     }
 }
