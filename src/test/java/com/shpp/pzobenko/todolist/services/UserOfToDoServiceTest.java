@@ -175,8 +175,8 @@ class UserOfToDoServiceTest {
                 .willReturn(Optional.of(aimToChangeStatus));
 
         assertThatThrownBy(() -> serviceToTest.saveNewStatusOrThrowException(aimName, newStatus))
-                .isInstanceOf(StatusAlreadyFinalException.class)
-                .hasMessageContaining("StatusAlreadyFinal");
+                .isInstanceOf(NewStatusHaveWrongValuesException.class)
+                .hasMessageContaining("StatusCannotBeApplied");
     }
 
     @Test
