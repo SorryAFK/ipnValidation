@@ -1,5 +1,6 @@
 package com.shpp.pzobenko.todolist.advices;
 
+import com.shpp.pzobenko.todolist.exceptions.StatusAlreadyFinalException;
 import com.shpp.pzobenko.todolist.exceptions.YouDontHaveRuleToSeeThisInformationException;
 import com.shpp.pzobenko.todolist.exceptions.NewStatusHaveWrongValuesException;
 import com.shpp.pzobenko.todolist.exceptions.TheAimOnFoundException;
@@ -43,5 +44,14 @@ public class ExceptionAdvice {
             (YouDontHaveRuleToSeeThisInformationException youDontHaveRuleToSeeThisInformationException,
              Locale locale) {
         return messageSource.getMessage(youDontHaveRuleToSeeThisInformationException.getMessage(), null, locale);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(StatusAlreadyFinalException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    String statusAlreadyFinalException
+            (StatusAlreadyFinalException statusAlreadyFinalException,
+             Locale locale) {
+        return messageSource.getMessage(statusAlreadyFinalException.getMessage(), null, locale);
     }
 }

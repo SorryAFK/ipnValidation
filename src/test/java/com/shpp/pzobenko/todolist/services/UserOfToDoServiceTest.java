@@ -1,5 +1,6 @@
 package com.shpp.pzobenko.todolist.services;
 
+import com.shpp.pzobenko.todolist.exceptions.StatusAlreadyFinalException;
 import com.shpp.pzobenko.todolist.exceptions.YouDontHaveRuleToSeeThisInformationException;
 import com.shpp.pzobenko.todolist.repositorys.TheAimRepository;
 import com.shpp.pzobenko.todolist.repositorys.UserRepository;
@@ -131,6 +132,37 @@ class UserOfToDoServiceTest {
         assertThatThrownBy(() -> serviceToTest.changeStatusOfAim(aimName, newStatus, username))
                 .isInstanceOf(NewStatusHaveWrongValuesException.class)
                 .hasMessageContaining("StatusCannotApply");
+    }
+
+    @Test
+    void changeStatusFromFinalToAnotherWaitingForException() {
+        String username = "SomeUsername";
+
+        UserOfToDo userForTest = UserOfToDo.builder()
+                .username(username)
+                .password("00000000")
+                .role(Role.USER)
+                .build();
+
+        String aimName = "MyAimForTest";
+        StatusOfAim status = StatusOfAim.CANCELED;
+
+        TheAim aimToChangeStatus = TheAim.builder()
+                .nameOfAim(aimName)
+                .description("JustForTest")
+                .status(status)
+                .userOfToDo(userForTest)
+                .timeOfTheEndOfAim(LocalDateTime.now().plusDays(69))
+                .build();
+
+        StatusOfAim newStatus = StatusOfAim.DONE;
+
+        given(aimRepository.findById(aimName))
+                .willReturn(Optional.of(aimToChangeStatus));
+
+        assertThatThrownBy(() -> serviceToTest.changeStatusOfAim(aimName, newStatus, username))
+                .isInstanceOf(StatusAlreadyFinalException.class)
+                .hasMessageContaining("StatusAlreadyFinal");
     }
 
     @Test

@@ -67,21 +67,11 @@ public class ToDoListController {
                 .body(aimAssembler.toModel(service.addNewAim(mapDtoToAimEntity(dto), GetCurrentUserService.getCurrentUsername())));
     }
 
-    @PutMapping("/{nameOfAim}/in-progress")
-    public ResponseEntity<EntityModel<TheAim>> statusToInProgress(@PathVariable String nameOfAim) {
-        return ResponseEntity.ok(aimAssembler.toModel(service.changeStatusOfAim(nameOfAim, StatusOfAim.IN_PROCESS, nameOfAim)));
+    @PutMapping("/{nameOfAim}")
+    public ResponseEntity<EntityModel<TheAim>> changeStatus(@PathVariable String nameOfAim,
+                                                            @RequestParam(name = "status") StatusOfAim newStatus) {
+        return ResponseEntity.ok(aimAssembler.toModel(service.changeStatusOfAim(nameOfAim, newStatus, nameOfAim)));
     }
-
-    @PutMapping("/{nameOfAim}/done")
-    public ResponseEntity<EntityModel<TheAim>> statusToDone(@PathVariable String nameOfAim) {
-        return ResponseEntity.ok(aimAssembler.toModel(service.changeStatusOfAim(nameOfAim, StatusOfAim.DONE, nameOfAim)));
-    }
-
-    @PutMapping("/{nameOfAim}/canceled")
-    public ResponseEntity<EntityModel<TheAim>> statusToCanceled(@PathVariable String nameOfAim) {
-        return ResponseEntity.ok(aimAssembler.toModel(service.changeStatusOfAim(nameOfAim, StatusOfAim.CANCELED, nameOfAim)));
-    }
-
     @DeleteMapping("/{nameOfAim}/delete")
     public ResponseEntity<EntityModel<TheAim>> deleteTheAim(@PathVariable String nameOfAim) {
         return ResponseEntity

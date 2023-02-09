@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IsNewAimStatusArePlaned {
-    String message() default "Status not valid.";
+    String message() default "{StatusNotValid}";
 
     Class<?>[] groups() default {};
 
