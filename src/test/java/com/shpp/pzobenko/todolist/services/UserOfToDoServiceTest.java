@@ -1,6 +1,5 @@
 package com.shpp.pzobenko.todolist.services;
 
-import com.shpp.pzobenko.todolist.exceptions.StatusAlreadyFinalException;
 import com.shpp.pzobenko.todolist.exceptions.YouDontHaveRuleToSeeThisInformationException;
 import com.shpp.pzobenko.todolist.repositorys.TheAimRepository;
 import com.shpp.pzobenko.todolist.repositorys.UserRepository;
