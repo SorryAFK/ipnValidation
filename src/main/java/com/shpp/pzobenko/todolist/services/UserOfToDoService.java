@@ -54,14 +54,8 @@ public class UserOfToDoService {
 
         StatusOfAim statusWhichWasBefore = aim.getStatus();
         log.info("find ok {}", aim.getNameOfAim());
-        if (statusWhichWasBefore == StatusOfAim.PLANNED &&
-                (newStatus == StatusOfAim.IN_PROCESS || newStatus == StatusOfAim.CANCELED)) {
-            log.info("Status successfully switched from {} to {}", statusWhichWasBefore, newStatus);
-            aim.setStatus(newStatus);
-        }
-        else if (statusWhichWasBefore == StatusOfAim.IN_PROCESS &&
-                (newStatus == StatusOfAim.DONE || newStatus == StatusOfAim.CANCELED)) {
-            log.info("Status successfully switched from {} to {}", statusWhichWasBefore, newStatus);
+
+        if (statusWhichWasBefore.getNextStatus().equals(newStatus) || newStatus.equals(StatusOfAim.CANCELED)) {
             aim.setStatus(newStatus);
         } else {
             throw new NewStatusHaveWrongValuesException();
