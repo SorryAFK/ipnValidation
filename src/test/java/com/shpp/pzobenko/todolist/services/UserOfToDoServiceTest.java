@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
@@ -54,7 +54,7 @@ class UserOfToDoServiceTest {
                 .timeOfTheEndOfAim(LocalDateTime.now().plusDays(69))
                 .build();
 
-        given(userRepository.findById(username))
+        given(userRepository.findUserOfToDoByUsername(username))
                 .willReturn(Optional.of(userForTest));
 
         aimToAdd.setUserOfToDo(userForTest);
@@ -64,7 +64,7 @@ class UserOfToDoServiceTest {
         serviceToTest.addNewAim(aimToAdd, username);
 
         verify(aimRepository).save(aimToAdd);
-        verify(userRepository).findById(username);
+        verify(userRepository).findUserOfToDoByUsername(username);
     }
 
     @Test
@@ -89,12 +89,12 @@ class UserOfToDoServiceTest {
 
         StatusOfAim newStatus = StatusOfAim.IN_PROCESS;
 
-        given(aimRepository.findById(aimName))
+        given(aimRepository.findTheAimByNameOfAim(aimName))
                 .willReturn(Optional.of(aimToChangeStatus));
 
         given(aimRepository.save(aimToChangeStatus)).willReturn(aimToChangeStatus);
 
-        TheAim aimWithChangedStatus = serviceToTest.changeStatusOfAim(aimName, newStatus, username);
+        TheAim aimWithChangedStatus = serviceToTest.saveNewStatusOrThrowException(aimName, newStatus);
 
         verify(aimRepository).save(aimToChangeStatus);
 
@@ -126,12 +126,26 @@ class UserOfToDoServiceTest {
 
         StatusOfAim newStatus = StatusOfAim.DONE;
 
-        given(aimRepository.findById(aimName))
+        given(aimRepository.findTheAimByNameOfAim(aimName))
                 .willReturn(Optional.of(aimToChangeStatus));
 
-        assertThatThrownBy(() -> serviceToTest.changeStatusOfAim(aimName, newStatus, username))
+        assertThatThrownBy(() -> serviceToTest.saveNewStatusOrThrowException(aimName, newStatus))
                 .isInstanceOf(NewStatusHaveWrongValuesException.class)
                 .hasMessageContaining("StatusCannotBeApplied");
+    }
+
+    @Test
+    void testStatusChanging() {
+        assertTrue(serviceToTest.canChangeStatusToNew(StatusOfAim.PLANNED,StatusOfAim.IN_PROCESS));
+        assertTrue(serviceToTest.canChangeStatusToNew(StatusOfAim.PLANNED,StatusOfAim.CANCELED));
+        assertTrue(serviceToTest.canChangeStatusToNew(StatusOfAim.IN_PROCESS,StatusOfAim.DONE));
+        assertTrue(serviceToTest.canChangeStatusToNew(StatusOfAim.IN_PROCESS, StatusOfAim.CANCELED));
+
+        assertFalse(serviceToTest.canChangeStatusToNew(StatusOfAim.DONE,StatusOfAim.IN_PROCESS));
+        assertFalse(serviceToTest.canChangeStatusToNew(StatusOfAim.DONE,StatusOfAim.CANCELED));
+        assertFalse(serviceToTest.canChangeStatusToNew(StatusOfAim.PLANNED, StatusOfAim.DONE));
+        assertFalse(serviceToTest.canChangeStatusToNew(StatusOfAim.IN_PROCESS,StatusOfAim.PLANNED));
+
     }
 
     @Test
@@ -157,10 +171,10 @@ class UserOfToDoServiceTest {
 
         StatusOfAim newStatus = StatusOfAim.DONE;
 
-        given(aimRepository.findById(aimName))
+        given(aimRepository.findTheAimByNameOfAim(aimName))
                 .willReturn(Optional.of(aimToChangeStatus));
 
-        assertThatThrownBy(() -> serviceToTest.changeStatusOfAim(aimName, newStatus, username))
+        assertThatThrownBy(() -> serviceToTest.saveNewStatusOrThrowException(aimName, newStatus))
                 .isInstanceOf(StatusAlreadyFinalException.class)
                 .hasMessageContaining("StatusAlreadyFinal");
     }
@@ -175,7 +189,7 @@ class UserOfToDoServiceTest {
                 .role(Role.USER)
                 .build();
 
-        given(userRepository.findById(username))
+        given(userRepository.findUserOfToDoByUsername(username))
                 .willReturn(Optional.of(userForTest));
 
         assertThatThrownBy(() -> serviceToTest.getAllUsersInThisAppButOnlyAdminRule(username))

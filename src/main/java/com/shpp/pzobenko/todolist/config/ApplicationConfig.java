@@ -21,7 +21,7 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> repository.findById(username)
+        return username -> repository.findUserOfToDoByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         "User with this username " + username + " not found"
                 ));

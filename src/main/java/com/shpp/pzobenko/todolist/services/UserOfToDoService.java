@@ -29,13 +29,13 @@ public class UserOfToDoService {
 
     public TheAim getAimByName(String aimName) {
         log.info("user trying to get aim with name {}", aimName);
-        return aimRepository.findById(aimName)
+        return aimRepository.findTheAimByNameOfAim(aimName)
                 .orElseThrow(TheAimOnFoundException::new);
     }
 
     public UserOfToDo getUserOfToDo(String username) {
-        return userRepository.findById(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Not found the user"));
+        return userRepository.findUserOfToDoByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("{NotFoundTheUser}"));
     }
 
     public TheAim addNewAim(TheAim newAim, String username) {
@@ -44,25 +44,22 @@ public class UserOfToDoService {
         return aimRepository.save(newAim);
     }
 
-    public TheAim changeStatusOfAim(String aimName, StatusOfAim newStatus, String username) {
-
-        log.info("User with username \"{}\", switching status of his aim \"{}\" to \"{}\""
-                , username, aimName, newStatus);
-
-        TheAim aim = aimRepository.findById(aimName)
-                .orElseThrow(TheAimOnFoundException::new);
-
-        StatusOfAim statusWhichWasBefore = aim.getStatus();
-        log.info("find ok {}", aim.getNameOfAim());
-
-        if (statusWhichWasBefore.getNextStatus().equals(newStatus) || newStatus.equals(StatusOfAim.CANCELED)) {
-            aim.setStatus(newStatus);
+    public TheAim saveNewStatusOrThrowException(String nameOfAim, StatusOfAim newStatus) {
+        TheAim aimToChangeStatus = getAimByName(nameOfAim);
+        StatusOfAim oldStatus =  aimToChangeStatus.getStatus();
+        if(canChangeStatusToNew(oldStatus, newStatus)) {
+            aimToChangeStatus.setStatus(newStatus);
         } else {
             throw new NewStatusHaveWrongValuesException();
         }
+        return aimRepository.save(aimToChangeStatus);
+    }
 
-        log.info("The end of the method to change status.");
-        return aimRepository.save(aim);
+    public boolean canChangeStatusToNew(StatusOfAim oldStatus, StatusOfAim newStatus) {
+        if (oldStatus.canChangeOnNextStatus()) {
+            return oldStatus.getNextStatus().equals(newStatus) || newStatus.equals(StatusOfAim.CANCELED);
+        }
+        return false;
     }
 
     public TheAim deleteAim(String aimName) {

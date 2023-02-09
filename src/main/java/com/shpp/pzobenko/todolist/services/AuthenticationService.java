@@ -36,6 +36,7 @@ public class AuthenticationService {
                 .build();
     }
 
+    @SuppressWarnings("all")
     public void admin() {
         UserOfToDo user = UserOfToDo.builder()
                 .username("Admin")
@@ -52,7 +53,7 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        UserOfToDo user = repository.findById(request.getUsername())
+        UserOfToDo user = repository.findUserOfToDoByUsername(request.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException(
                                 "User with username " + request.getUsername() + " not found"
                         )

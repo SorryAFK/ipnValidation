@@ -21,6 +21,10 @@ public enum StatusOfAim {
         this.isStatusFinal = isStatusFinal;
     }
 
+    public boolean canChangeOnNextStatus() {
+        return !isStatusFinal;
+    }
+
     public StatusOfAim getNextStatus() {
          if (isStatusFinal) {
              throw new StatusAlreadyFinalException();
