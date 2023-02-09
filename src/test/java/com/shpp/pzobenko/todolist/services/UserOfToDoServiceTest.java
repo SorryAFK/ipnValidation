@@ -1,6 +1,5 @@
 package com.shpp.pzobenko.todolist.services;
 
-import com.shpp.pzobenko.todolist.exceptions.StatusAlreadyFinalException;
 import com.shpp.pzobenko.todolist.exceptions.YouDontHaveRuleToSeeThisInformationException;
 import com.shpp.pzobenko.todolist.repositorys.TheAimRepository;
 import com.shpp.pzobenko.todolist.repositorys.UserRepository;
@@ -175,8 +174,8 @@ class UserOfToDoServiceTest {
                 .willReturn(Optional.of(aimToChangeStatus));
 
         assertThatThrownBy(() -> serviceToTest.saveNewStatusOrThrowException(aimName, newStatus))
-                .isInstanceOf(StatusAlreadyFinalException.class)
-                .hasMessageContaining("StatusAlreadyFinal");
+                .isInstanceOf(NewStatusHaveWrongValuesException.class)
+                .hasMessageContaining("StatusCannotBeApplied");
     }
 
     @Test
