@@ -69,7 +69,8 @@ public class ToDoListController {
 
     @PutMapping("/{nameOfAim}")
     public ResponseEntity<EntityModel<TheAim>> changeStatus(@PathVariable String nameOfAim,
-                                                            @RequestParam(name = "status") StatusOfAim newStatus) {
+                                                            @RequestParam(name = "status")
+                                                            StatusOfAim newStatus) {
         return ResponseEntity.ok(aimAssembler.toModel(service.saveNewStatusOrThrowException(nameOfAim, newStatus)));
     }
     @DeleteMapping("/{nameOfAim}/delete")
