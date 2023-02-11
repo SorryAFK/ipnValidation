@@ -144,7 +144,6 @@ class UserOfToDoServiceTest {
         assertFalse(serviceToTest.canChangeStatusToNew(StatusOfAim.DONE,StatusOfAim.CANCELED));
         assertFalse(serviceToTest.canChangeStatusToNew(StatusOfAim.PLANNED, StatusOfAim.DONE));
         assertFalse(serviceToTest.canChangeStatusToNew(StatusOfAim.IN_PROCESS,StatusOfAim.PLANNED));
-
     }
 
     @Test
