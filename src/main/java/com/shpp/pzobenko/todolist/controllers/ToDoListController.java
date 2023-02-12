@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -26,6 +27,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping("/api/v2/to-do-list")
 @RequiredArgsConstructor
+@Validated
 public class ToDoListController {
     private final UserOfToDoService service;
     private final ToDoListAssemblerForAim aimAssembler;
